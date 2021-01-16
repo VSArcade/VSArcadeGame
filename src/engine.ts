@@ -28,6 +28,8 @@ export default class VSAEngine {
 
   renderCanvas() {
 
+    var words: string[] = []; // nithin delete this
+
     var canvas = <HTMLCanvasElement> document.getElementById('game-canvas')
     
     var context = canvas.getContext('2d')
