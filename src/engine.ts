@@ -28,7 +28,7 @@ export default class VSAEngine {
       context!.beginPath()
       for (var i = 0; i < bodies.length; i += 1) {
         var body = bodies[i]
-        if (body.label!="Body") {
+        if (body.label!=null) {
           console.log("hvhyyfyf")
           // 30px is default font size
           var fontsize = 15

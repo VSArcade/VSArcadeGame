@@ -1,6 +1,6 @@
 import { Engine, Events, Render, World, Bodies, Body, Vector, IChamferableBodyDefinition, Mouse } from 'matter-js'
 import VSAEngine from '../engine'
-import { BreakoutBodyTags } from '../types/BodyTags.types'
+import { player_options } from '../types/BodyTags.types'
 import { clamp } from '../helpers'
 
 const player_speed: number = 0.1;
@@ -8,11 +8,6 @@ const max_speed: number = 1.5;
 const player_dimension: Vector = {
   x: 120,
   y: 20
-}
-const player_options: IChamferableBodyDefinition = {
-  // isStatic: true
-  inertia: Infinity,
-  frictionAir: 0.2
 }
 
 export default class BreakOutPlayer {
@@ -29,7 +24,6 @@ export default class BreakOutPlayer {
       player_dimension.y, 
       player_options
     );
-    this.body.label = BreakoutBodyTags.Player;
 
     this.input = 0;
 
