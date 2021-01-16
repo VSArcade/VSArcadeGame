@@ -1,10 +1,12 @@
 import VSAEngine from '../engine'
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
 import { BreakoutBodyTags } from '../types/BodyTags.types'
+import { initCollisions } from './collisions'
+import Player from './player'
 
 const border_thickness = 20;
 
-export const initBreakoutMap = (vsaengine: VSAEngine) => {
+const initBreakoutMap = (vsaengine: VSAEngine) => {
 
   /* make boundaries */
   vsaengine.addBody([
@@ -16,7 +18,7 @@ export const initBreakoutMap = (vsaengine: VSAEngine) => {
 
 }
 
-export const initBall = (vsaengine: VSAEngine) => {
+const initBall = (vsaengine: VSAEngine) => {
   var ball = Bodies.circle(200, 200, 12, {
     restitution: 1,
     frictionAir: 0
@@ -34,6 +36,10 @@ export const initBall = (vsaengine: VSAEngine) => {
 export const startBreakout = () => {
 
   var vsaengine = new VSAEngine();
+  initBreakoutMap(vsaengine);
+  initBall(vsaengine);
+  initCollisions(vsaengine);
+  var player: Player = new Player(vsaengine);
 
 }
 
