@@ -27,7 +27,7 @@ window.addEventListener('message', (event: MessageEvent) => {
 
   }
 
-  let text = event.data.msg.code;
+  let text = event.data.msg.eventInfo.code;
 
   // create an engine
   var engine: Engine = Engine.create();
