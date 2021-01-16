@@ -1,7 +1,8 @@
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
 
-window.addEventListener("message", (event) => {
-    let code = event.data.msg.code;
+// window.addEventListener("message", (event) => {
+    // let code = event.data.msg.code;
+    let code = ["fdsfs", "fsjdkfsdlk", "fdsfjsdfkl", "jklfsdkjfks"]
     // then here you'll start the game
     // create an engine
     var engine: Engine = Engine.create();
@@ -37,4 +38,4 @@ window.addEventListener("message", (event) => {
 
     // run the renderer
     Render.run(render);
-})
+// })
