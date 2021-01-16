@@ -8,6 +8,7 @@ export default class VSAEngine {
   constructor() {
 
     this.engine = Engine.create();
+    this.engine.world.gravity.y = 0;
 
     this.render = Render.create({
         element: document.body,
