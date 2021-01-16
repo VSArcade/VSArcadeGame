@@ -1,71 +1,64 @@
 import Matter from 'matter-js';
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
-import { GameWord } from './GameWord'
+import {GameWord} from './GameWord'
 import { initListeners } from './reciever'
 import VSAEngine from './engine'
 import Player from './game/player'
-import { EventType, EventInfo, EventData, InitEventInfo } from './types/EventData.types'
+import { initBreakoutMap, initBall } from './game/breakout'
+import { initCollisions } from './game/collisions'
 
+initListeners();
 
-// initListeners();
+var vsaengine: VSAEngine = new VSAEngine();
+initBreakoutMap(vsaengine);
+initBall(vsaengine);
+initCollisions(vsaengine);
+var player: Player = new Player(vsaengine);
 
-window.addEventListener('message', (event: MessageEvent) => {
+var text = ['djfi dfhidh daoei','aregf rgrg rgrw w']
 
-  const data: EventData = event.data;
+// create an engine
+var engine: Engine = Engine.create();
 
-  switch (data.eventType) {
-
-    case EventType.Init:
-
-      const info: InitEventInfo = data.eventInfo;
-      console.log(`vscode-background: ${info.styles.background}`);
-
-      break;
-
-    default:
-      console.warn('Illegal event data type');
-
-  }
-
-  let text = event.data.msg.eventInfo.code;
-  console.table(text)
-
-  // create an engine
-  var engine: Engine = Engine.create();
-
-  function createGameWords(text: string[]): GameWord[] {
-    var gameWords: GameWord[] = [];
+function createGameWords(text:string[]):GameWord[]{
+    var gameWords:GameWord[]=[];
 
     var curHeight = 200;
-    for (var i = 0; i < text.length; i++) {
-      var line = text[i].split(' ');
-      var curLength = 400;
-      for (var j = 0; j < line.length; j++) {
-        var word = line[j]
-        gameWords.push(new GameWord(word, curLength, curHeight, 10 * word.length, 20))
-        curLength += 10 * word.length
-      }
+    for(var i = 0;i<text.length;i++){
+        var line = text[i].split(' ');
+        var curLength = 400;
+        for (var j = 0;j<line.length;j++) {
+            var word = line[j]
+
+            gameWords.push(new GameWord(word,curLength,curHeight,10*word.length, 20))
+            curLength+=10*word.length 
+
+        }
+
     }
+    
 
     return gameWords;
 
-  }
 
-  var words = createGameWords(text);
-  var ground: Body = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+}
+var words = createGameWords(text)
+var ground: Body = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 
-  // add all of the bodies to the world
-  World.add(engine.world, ground);
-  words.forEach((word) => {
-    World.add(engine.world, word.body)
-  })
+// add all of the bodies to the world
+World.add(engine.world, ground);
+words.forEach((word)=>{
+    World.add(engine.world,word.body)
+})
 
-  // run the engine
-  Engine.run(engine);
 
-  function render() {
-    var canvas = <HTMLCanvasElement>document.getElementById('game-canvas')
 
+// run the engine
+Engine.run(engine);
+
+function render () {
+    var canvas = <HTMLCanvasElement> document.getElementById('game-canvas')
+    
     var context = canvas.getContext('2d')
 
     window.requestAnimationFrame(render)
@@ -84,7 +77,7 @@ window.addEventListener('message', (event: MessageEvent) => {
         var color = '#FF0000'
 
         var content = word.text//this is the string
-
+        
         context!.fillStyle = 'black'
         context!.save()
         context!.translate(word.body.position.x, word.body.position.y)
@@ -100,19 +93,17 @@ window.addEventListener('message', (event: MessageEvent) => {
         context!.restore()
 
       }
-      //   var vertices = word.body.vertices
-      //   context!.moveTo(vertices[0].x, vertices[0].y)
-      //   for (var j = 1; j < vertices.length; j += 1) {
-      //     context!.lineTo(vertices[j].x, vertices[j].y)
-      //   }
-      //   context!.lineTo(vertices[0].x, vertices[0].y)
+    //   var vertices = word.body.vertices
+    //   context!.moveTo(vertices[0].x, vertices[0].y)
+    //   for (var j = 1; j < vertices.length; j += 1) {
+    //     context!.lineTo(vertices[j].x, vertices[j].y)
+    //   }
+    //   context!.lineTo(vertices[0].x, vertices[0].y)
     }
     context!.lineWidth = 1.5
     context!.strokeStyle = '#000000'
     context!.stroke()
-  }
+}
+render()
 
-  render()
 
-
-});

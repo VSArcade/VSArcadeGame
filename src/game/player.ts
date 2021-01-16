@@ -1,6 +1,7 @@
 import { Engine, Events, Render, World, Bodies, Body, Vector, IChamferableBodyDefinition, Mouse } from 'matter-js'
 import VSAEngine from '../engine'
-import { smoothMove, clamp } from '../helpers'
+import { BreakoutBodyTags } from '../types/BodyTags.types'
+import { clamp } from '../helpers'
 
 const player_speed: number = 0.1;
 const max_speed: number = 1.5;
@@ -18,7 +19,6 @@ export default class BreakOutPlayer {
 
   body: Body
   input: number
-  velocity: number
 
   constructor(vsaengine: VSAEngine) {
 
@@ -29,15 +29,13 @@ export default class BreakOutPlayer {
       player_dimension.y, 
       player_options
     );
+    this.body.label = BreakoutBodyTags.Player;
 
     this.input = 0;
-    this.velocity = 0;
 
     vsaengine.addBody([this.body]);
-    Events.on(vsaengine.engine, 'beforeUpdate', () => {
-      // console.log('update');
 
-      /* input */
+    Events.on(vsaengine.engine, 'beforeUpdate', () => {
 
       /* clamp speed */
       if (this.body.velocity.x > max_speed) {
@@ -70,16 +68,12 @@ export default class BreakOutPlayer {
       switch(event.key) {
         case "h":
         case "ArrowLeft": //left arrow
-          // Body.applyForce(this.body, this.body.position, {x: -player_speed, y: 0});
           this.input = -1;
-
           break;
 
         case "l":
         case "ArrowRight": // right arrow
-          // Body.applyForce(this.body, this.body.position, {x: player_speed, y: 0});
           this.input = 1;
-
           break;
 
       }
@@ -102,6 +96,5 @@ export default class BreakOutPlayer {
     });
 
   }
-
 
 }

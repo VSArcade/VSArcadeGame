@@ -7,7 +7,8 @@ export type InitEventInfo = {
   gameType: string,
   styles: {
     background: string
-  }
+  },
+  code: string[]
 }
 
 export type EventInfo = InitEventInfo

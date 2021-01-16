@@ -4,5 +4,6 @@ body {
 }
 
 #game-canvas {
-  background-color: yellow !important;
+  background-color: var(--vscode-editor-background) !important;
 }
+

@@ -22,7 +22,6 @@ export default class VSAEngine {
     this.render.canvas.id = 'game-canvas';
     
     Engine.run(this.engine);
-
     Render.run(this.render);
 
   }
