@@ -1,6 +1,5 @@
 import Matter from 'matter-js';
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
-import {GameWord} from './GameWord'
 import { initListeners } from './reciever'
 import VSAEngine from './engine'
 import { startBreakout } from './game/breakout';
@@ -13,29 +12,7 @@ startBreakout();
 // create an engine
 // var engine: Engine = Engine.create();
 
-// function createGameWords(text: string[]): GameWord[] {
 
-//     var gameWords: GameWord[] = [];
-
-//     var curHeight = 200;
-//     for(var i = 0; i < text.length; i++){
-
-//         var line = text[i].split(' ');
-//         var curLength = 400;
-
-//         for (var j = 0; j < line.length; j++) {
-//             var word = line[j]
-
-//             gameWords.push(new GameWord(word, curLength, curHeight, 10*word.length, 20))
-//             curLength+=10*word.length 
-
-//         }
-
-//     }
-    
-//     return gameWords;
-
-// }
 // var words = createGameWords(text)
 // var ground: Body = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 

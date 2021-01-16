@@ -4,6 +4,8 @@ import { BreakoutBodyTags } from '../types/BodyTags.types'
 import { initCollisions } from './collisions'
 import Player from './player'
 
+
+
 const border_thickness = 20;
 
 const initBreakoutMap = (vsaengine: VSAEngine) => {
@@ -15,6 +17,31 @@ const initBreakoutMap = (vsaengine: VSAEngine) => {
     Bodies.rectangle(0, 0-border_thickness, window.innerWidth*2, border_thickness, {isStatic: true}),
     Bodies.rectangle(0, window.innerHeight, window.innerWidth*2, border_thickness, {isStatic: true}),
   ]);   
+
+}
+const initWords = (vsaengine: VSAEngine, text: string[],initY:number,initX:number)=>{
+
+    var curY = 200;
+    for(var i = 0; i < text.length; i++){
+
+        var line = text[i].split(' ');
+        var curX = 400;
+
+        for (var j = 0; j < line.length; j++) {
+            var word = line[j]
+            console.log("hggg")
+
+            
+            vsaengine.addBody([Bodies.rectangle(curX,curY,10*word.length,20,{label:word})])
+            curX+=10*word.length 
+
+        }
+        curY+=15
+
+    }
+
+
+
 
 }
 
@@ -39,6 +66,7 @@ export const startBreakout = () => {
   initBreakoutMap(vsaengine);
   initBall(vsaengine);
   initCollisions(vsaengine);
+  initWords(vsaengine,["gieh efjeif","eiufhi, jfeiejfi"],200,200)
   var player: Player = new Player(vsaengine);
 
 }
