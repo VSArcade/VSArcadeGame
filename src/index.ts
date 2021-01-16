@@ -1,7 +1,12 @@
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
 import { initListeners } from './reciever'
+import VSAEngine from './engine'
+import Player from './game/player'
 
 initListeners();
+
+var vsaengine: VSAEngine = new VSAEngine();
+var player: Player = new Player(vsaengine);
 
 // create an engine
 var engine: Engine = Engine.create();

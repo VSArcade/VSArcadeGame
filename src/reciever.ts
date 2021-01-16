@@ -1,12 +1,24 @@
-import { InitEvent } from './types/EventData.types'
+import { EventType, EventInfo, EventData, InitEventInfo } from './types/EventData.types'
 
 export const initListeners = () => {
 
-  window.addEventListener("message", (event: MessageEvent) => {
+  window.addEventListener('message', (event: MessageEvent) => {
 
-    const data: InitEvent = event.data;
+    const data: EventData = event.data;
 
-    console.log(`vscode-background: ${data.styles.background}`); 
+    switch (data.eventType) {
+
+      case EventType.Init:
+
+        const info: InitEventInfo = data.eventInfo;
+        console.log(`vscode-background: ${info.styles.background}`); 
+
+        break;
+
+      default:
+        console.warn('Illegal event data type');
+
+    }
 
   });
 
