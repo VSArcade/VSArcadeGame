@@ -32,17 +32,25 @@ window.addEventListener('message', (event: MessageEvent) => {
   // create an engine
   var engine: Engine = Engine.create();
 
-  function createGameWords(text: string): GameWord[] {
-    var curLength = 400;
-    return text.split(' ').map((word, index) => {
-      console.log(curLength)
-      var gm = new GameWord(word, curLength, 200, 10 * word.length, 20)
-      curLength += 10 * word.length
-      return gm
-    });
+  function createGameWords(text: string[]): GameWord[] {
+    var gameWords: GameWord[] = [];
+
+    var curHeight = 200;
+    for (var i = 0; i < text.length; i++) {
+      var line = text[i].split(' ');
+      var curLength = 400;
+      for (var j = 0; j < line.length; j++) {
+        var word = line[j]
+        gameWords.push(new GameWord(word, curLength, curHeight, 10 * word.length, 20))
+        curLength += 10 * word.length
+      }
+    }
+
+    return gameWords;
+
   }
 
-  var words = createGameWords(text)
+  var words = createGameWords(text);
   var ground: Body = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
 
   // add all of the bodies to the world
@@ -50,8 +58,6 @@ window.addEventListener('message', (event: MessageEvent) => {
   words.forEach((word) => {
     World.add(engine.world, word.body)
   })
-
-
 
   // run the engine
   Engine.run(engine);
