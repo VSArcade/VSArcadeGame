@@ -6,14 +6,20 @@ export interface VSStyle {
   fontFamily: string,
 }
 
+const getStyle = (root: CSSStyleDeclaration, prop: string, def: string): string => {
+  var styleProp = root.getPropertyValue(prop);
+  if (styleProp == "") return def;
+  return prop;
+}
+
 export const grabStyles = () => {
   const root = getComputedStyle(document.getElementsByTagName("html")[0]);
 
   var style: VSStyle = {
-    backgroundColor: root.getPropertyValue('--vscode-editor-background'),
-    foregroundColor: root.getPropertyValue('--vscode-foreground'),
-    fontSize: root.getPropertyValue('--vscode-font-size'),
-    fontFamily: root.getPropertyValue('--vscode-font-family'),
+    backgroundColor: getStyle(root, '--vscode-editor-background', '#000000'),
+    foregroundColor: getStyle(root, '--vscode-foreground', '#FFFFFF'),
+    fontSize: getStyle(root, '--vscode-font-size', '15'),
+    fontFamily: getStyle(root, '--vscode-font-family', 'Courier New'),
   }
 
   return style;
