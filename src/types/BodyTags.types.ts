@@ -66,7 +66,8 @@ export const block_options: IChamferableBodyDefinition = {
   collisionFilter: {
     category: BreakoutBodyCatagories.Block,
     mask: BreakoutBodyMask.Block
-  }
+  },
+  frictionAir: 0
 }
 
 export const player_options: IChamferableBodyDefinition = {

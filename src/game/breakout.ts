@@ -28,28 +28,31 @@ const initBreakoutMap = (vsaengine: VSAEngine) => {
 }
 
 const lineHeight = 25;
-const initWords = (vsaengine: VSAEngine, text: string[], initY: number, initX: number) => {
+const initWords = (vsaengine: VSAEngine, text: string[], initX: number) => {
+    var initY = -text.length*lineHeight*9/10
 
-    var curY = 200;
     for (var i = 0; i < text.length; i++) {
 
         var line = text[i].split(' ');
-        var curX = 500;
+        var curX = initX;
 
         for (var j = 0; j < line.length; j++) {
             var word = line[j];
-            var wordLength = 9*word.length
+            var wordLength = 9*word.length+15
 
-            var newWord = Bodies.rectangle(curX, curY, wordLength, 20, block_options);
+            var newWord = Bodies.rectangle(curX, initY, wordLength, 20, block_options);
             newWord.label = word;
             vsaengine.addBody([newWord]);
             if(j!=line.length-1){
               curX += wordLength/2+line[j+1].length*9/2
 
             }
+            Body.setVelocity(newWord,{x:0,y:0.2})
+            
             
         }
-        curY += lineHeight;
+        initY += lineHeight;
+
     }
 }
 
@@ -65,11 +68,11 @@ export const startBreakout = () => {
       "var new_velo: Vector;",
       "if (ball.position.x - player.position.x > 0) { // to right",
         "new_velo = Vector.rotate({ x: 1, y: 0}, Math.random() * (Math.PI/2) );",
-
+        "",
         "Body.setVelocity(ball, ",
           "Vector.mult( new_velo, Vector.magnitude(ball.velocity) )",
         ");"], 
-    0, 200
+    400
   );
   var player: Player = new Player(vsaengine);
   var ball: Ball = new Ball(vsaengine, 12);
