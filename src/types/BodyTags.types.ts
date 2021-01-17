@@ -20,8 +20,11 @@ export const boundary_options: IChamferableBodyDefinition = {
 }
 
 export const ball_options: IChamferableBodyDefinition = {
-  restitution: 1,
+  restitution: 1.01,
   frictionAir: 0,
+  friction: 0,
+  inertia: Infinity,
+  density: 0.00000000001,
   collisionFilter: {
     category: BreakoutBodyCatagories.Ball,
     group: GlobalGroup
@@ -30,6 +33,7 @@ export const ball_options: IChamferableBodyDefinition = {
 }
 
 export const block_options: IChamferableBodyDefinition = {
+  density: 10,
   collisionFilter: {
     category: BreakoutBodyCatagories.Block,
     group: GlobalGroup
@@ -40,6 +44,7 @@ export const player_options: IChamferableBodyDefinition = {
   // isStatic: true
   inertia: Infinity,
   frictionAir: 0.2,
+  friction: 0,
   collisionFilter: {
     category: BreakoutBodyCatagories.Player,
     group: GlobalGroup

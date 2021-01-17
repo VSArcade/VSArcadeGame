@@ -4,20 +4,18 @@ export default class VSAEngine {
 
   engine: Engine;
 
-  
-
   constructor() {
-
 
     this.engine = Engine.create();
     this.engine.world.gravity.y = 0;
-    var e = this.engine;
 
+    var e = this.engine;
     function renderCanvas(){
       const bodies = Composite.allBodies(e.world)
 
-
       var canvas = <HTMLCanvasElement> document.getElementById('game-canvas')
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     
       var context = canvas.getContext('2d')
 
@@ -29,7 +27,7 @@ export default class VSAEngine {
       for (var i = 0; i < bodies.length; i += 1) {
         var body = bodies[i]
         if (body.label!=null) {
-          console.log("hvhyyfyf")
+
           // 30px is default font size
           var fontsize = 15
           // arial is default font family
@@ -37,7 +35,7 @@ export default class VSAEngine {
           // white text color by default
           var color = '#FF0000'
 
-          var content = body.label//this is the string
+          var content = body.label //this is the string
           
           context!.fillStyle = 'black'
           context!.save()
@@ -53,7 +51,7 @@ export default class VSAEngine {
           context!.fillText(content, 0, 0)
           context!.restore()
 
-        }else{
+        } else {
           var vertices = body.vertices
           context!.moveTo(vertices[0].x, vertices[0].y)
           for (var j = 1; j < vertices.length; j += 1) {
@@ -72,7 +70,6 @@ export default class VSAEngine {
     
     Engine.run(this.engine);
     renderCanvas();
-
 
   }
 

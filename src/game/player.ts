@@ -6,7 +6,7 @@ import { clamp } from '../helpers'
 const player_speed: number = 0.1;
 const max_speed: number = 1.5;
 const player_dimension: Vector = {
-  x: 120,
+  x: 200,
   y: 20
 }
 
@@ -18,8 +18,8 @@ export default class BreakOutPlayer {
   constructor(vsaengine: VSAEngine) {
 
     this.body = Bodies.rectangle(
-      50,
-      50,
+      window.innerWidth/2,
+      window.innerHeight-player_dimension.y,
       player_dimension.x, 
       player_dimension.y, 
       player_options

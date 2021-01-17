@@ -11,7 +11,7 @@ export const initListeners = () => {
       case EventType.Init:
 
         const info: InitEventInfo = data.eventInfo;
-        console.log(`vscode-background: ${info.styles.background}`); 
+        // console.log(`vscode-background: ${info.styles.background}`); 
 
         break;
 
