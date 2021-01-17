@@ -13,9 +13,9 @@ export const AllMask = 0b11111111111111111111111111111111;
 export const NoMask =  0b00000000000000000000000000000000;
 
 export enum BreakoutBodyMask {
-  Player =         AllMask,
+  Player =         AllMask & ~(BreakoutBodyCatagories.Block),
   Ball =           AllMask,
-  Block =          AllMask & ~(BreakoutBodyCatagories.Block),
+  Block =          AllMask & ~(BreakoutBodyCatagories.Block) & ~(BreakoutBodyCatagories.Player),
   Boundary =       AllMask,
   BoundryBottom =  NoMask | BreakoutBodyCatagories.Player,
   BoundryTop =     AllMask & ~(BreakoutBodyCatagories.Block)

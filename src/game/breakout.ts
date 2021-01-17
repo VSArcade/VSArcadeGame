@@ -57,25 +57,37 @@ const initWords = (vsaengine: VSAEngine, text: string[], initX: number) => {
 }
 
 
-export const startBreakout = () => {
+export default class BreakoutGame {
 
-  var vsaengine = new VSAEngine();
-  initBreakoutMap(vsaengine);
-  initCollisions(vsaengine);
-  initWords(
-    vsaengine, 
-    ["setTimeout(() => {",
-      "var new_velo: Vector;",
-      "if (ball.position.x - player.position.x > 0) { // to right",
-        "new_velo = Vector.rotate({ x: 1, y: 0}, Math.random() * (Math.PI/2) );",
-        "",
-        "Body.setVelocity(ball, ",
-          "Vector.mult( new_velo, Vector.magnitude(ball.velocity) )",
-        ");"], 
-    400
-  );
-  var player: Player = new Player(vsaengine);
-  var ball: Ball = new Ball(vsaengine, 12);
+  score: number
+
+  constructor() {
+    this.score = 0;
+  }
+
+  startBreakout() {
+
+    var vsaengine = new VSAEngine();
+    initBreakoutMap(vsaengine);
+    initCollisions(vsaengine);
+    initWords(
+      vsaengine, 
+      ["setTimeout(() => {",
+        "var new_velo: Vector;",
+        "if (ball.position.x - player.position.x > 0) { // to right",
+          "new_velo = Vector.rotate({ x: 1, y: 0}, Math.random() * (Math.PI/2) );",
+          "",
+          "Body.setVelocity(ball, ",
+            "Vector.mult( new_velo, Vector.magnitude(ball.velocity) )",
+          ");"], 
+        400
+    );
+
+    var player: Player = new Player(vsaengine);
+    var ball: Ball = new Ball(vsaengine, 12);
+
+  }
+
 
 }
 
