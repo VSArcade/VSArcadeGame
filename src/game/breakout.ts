@@ -29,7 +29,7 @@ const initBreakoutMap = (vsaengine: VSAEngine) => {
 
 const lineHeight = 25;
 // const fallSpeed = 0.2;
-const fallSpeed = 1;
+const fallSpeed = 0.2;
 const initWords = (game: BreakoutGame, text: string[], initX: number): number => {
 
     var vsaengine: VSAEngine = game.vsaengine;
@@ -103,7 +103,7 @@ export default class BreakoutGame {
     initBreakoutMap(this.vsaengine);
     initCollisions(this);
     this.possibleScore = initWords(
-      this.vsaengine, 
+      this, 
       ["setTimeout(() => {",
         "var new_velo: Vector;",
         "if (ball.position.x - player.position.x > 0) { // to right",
@@ -116,7 +116,7 @@ export default class BreakoutGame {
     );
 
     var player: Player = new Player(this.vsaengine);
-    // var ball: Ball = new Ball(this, 12);
+    var ball: Ball = new Ball(this, 12);
 
   }
 
