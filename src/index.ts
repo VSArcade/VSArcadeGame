@@ -2,10 +2,10 @@ import { Engine, Render, World, Bodies, Body } from 'matter-js'
 import BreakoutGame from './game/breakout';
 import { initListeners } from './reciever';
 
-// initListeners();
+initListeners();
 
 
-var game: BreakoutGame = new BreakoutGame();
+// var game: BreakoutGame = new BreakoutGame();
 
 
 

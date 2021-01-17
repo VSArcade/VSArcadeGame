@@ -10,6 +10,7 @@ import {
   boundary_top_options, 
   block_options 
 } from '../types/BodyTags.types'
+import { grabStyles } from '../styles'
 
 
 const border_thickness = 20;
@@ -48,17 +49,20 @@ const initWords = (game: BreakoutGame, text: string[], initX: number): number =>
             var wordLength = 9*word.length+15;
 
             // check for lines with only whitespace and ignore them
-            if (word.replace(/\s/g, '').length == 0) continue;
+            if (word.replace(/\s/g, '').length != 0) {
 
-            var newWord = Bodies.rectangle(curX, initY, wordLength, 20, block_options);
-            newWord.label = word;
-            vsaengine.addBody([newWord]);
-            if(j!=line.length-1){
+              var newWord = Bodies.rectangle(curX, initY, wordLength, 20, block_options);
+              newWord.label = word;
+              vsaengine.addBody([newWord]);
+              Body.setVelocity(newWord,{x:0,y:fallSpeed});
+
+              totalLen += word.length;
+
+            }
+
+            if (j!=line.length-1) {
               curX += wordLength/2+line[j+1].length*9/2;
             }
-            Body.setVelocity(newWord,{x:0,y:fallSpeed});
-
-            totalLen += word.length;
 
         }
         initY += lineHeight;
@@ -86,7 +90,6 @@ const initWords = (game: BreakoutGame, text: string[], initX: number): number =>
       if (word_count == 0) { // gameover when there are no more words
         game.gameover();
       }
-
 
     });
 
@@ -116,7 +119,9 @@ export default class BreakoutGame {
   }
 
   setWords(words: string[]) {
-    this.possibleScore = initWords(this, words, 400);
+    var styles = grabStyles();
+    
+    this.possibleScore = initWords(this, words, parseInt(styles.containerPadding));
   }
 
   modScore(deltaScore: number) {

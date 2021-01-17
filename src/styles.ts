@@ -4,6 +4,7 @@ export interface VSStyle {
   foregroundColor: string,
   fontSize: string,
   fontFamily: string,
+  containerPadding: string
 }
 
 const getStyle = (root: CSSStyleDeclaration, prop: string, def: string): string => {
@@ -21,7 +22,8 @@ export const grabStyles = () => {
     // fontSize: getStyle(root, '--vscode-font-size', '15'),
     // fontFamily: getStyle(root, '--vscode-font-family', 'Courier New'),
     fontSize: '15',
-    fontFamily: 'Courier New'
+    fontFamily: 'Courier New',
+    containerPadding: '80'
   }
 
   return style;
