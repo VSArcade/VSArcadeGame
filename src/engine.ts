@@ -8,15 +8,18 @@ export default class VSAEngine {
 
     this.engine = Engine.create();
     this.engine.world.gravity.y = 0;
+    
+    /* create obj in dom */
+    // var canvas = document.createElement('canvas');
+    // canvas.id = 'game-canvas';
 
     var e = this.engine;
     function renderCanvas(){
       const bodies = Composite.allBodies(e.world)
 
-      var canvas = <HTMLCanvasElement> document.getElementById('game-canvas')
+      var canvas = <HTMLCanvasElement> document.getElementById('game-canvas');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-    
       var context = canvas.getContext('2d')
 
       window.requestAnimationFrame(renderCanvas)

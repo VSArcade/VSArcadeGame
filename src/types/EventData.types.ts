@@ -1,6 +1,6 @@
 
 export enum EventType {
-  Init
+  Init = 'init'
 }
 
 export type InitEventInfo = {

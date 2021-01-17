@@ -4,3 +4,4 @@ import { startBreakout } from './game/breakout';
 
 initListeners();
 startBreakout();
+

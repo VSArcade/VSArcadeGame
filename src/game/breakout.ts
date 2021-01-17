@@ -5,6 +5,8 @@ import Player from './player'
 import { boundary_options, ball_options, block_options } from '../types/BodyTags.types'
 
 
+					// // check for lines with only whitespace and ignore them
+					// if (document.lineAt(i).text.replace(/\s/g, '').length == 0) continue;
 
 const border_thickness = 20;
 

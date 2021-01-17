@@ -1,4 +1,5 @@
 import { EventType, EventInfo, EventData, InitEventInfo } from './types/EventData.types'
+import { startBreakout } from './game/breakout';
 
 export const initListeners = () => {
 
@@ -11,12 +12,16 @@ export const initListeners = () => {
       case EventType.Init:
 
         const info: InitEventInfo = data.eventInfo;
-        // console.log(`vscode-background: ${info.styles.background}`); 
+
+        console.log('READY TO START!!');
+        info.code.forEach(line => {
+          console.log(line);
+        });
 
         break;
 
       default:
-        console.warn('Illegal event data type');
+        console.warn(`Illegal event data type: ${data.eventType}`);
 
     }
 
