@@ -45,11 +45,10 @@ const initWords = (game: BreakoutGame, text: string[], initX: number): number =>
         for (var j = 0; j < line.length; j++) {
             var word = line[j];
 
+            var wordLength = 9*word.length+15;
+
             // check for lines with only whitespace and ignore them
             if (word.replace(/\s/g, '').length == 0) continue;
-
-            var wordLength = 9*word.length+15;
-            totalLen += word.length;
 
             var newWord = Bodies.rectangle(curX, initY, wordLength, 20, block_options);
             newWord.label = word;
@@ -58,6 +57,8 @@ const initWords = (game: BreakoutGame, text: string[], initX: number): number =>
               curX += wordLength/2+line[j+1].length*9/2;
             }
             Body.setVelocity(newWord,{x:0,y:fallSpeed});
+
+            totalLen += word.length;
 
         }
         initY += lineHeight;
