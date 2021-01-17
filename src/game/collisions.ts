@@ -3,8 +3,7 @@ import BreakoutGame from './breakout'
 import VSAEngine from '../engine'
 import { ball_options, block_options, BreakoutBodyCatagories } from '../types/BodyTags.types'
 import { randomizeVelo } from '../helpers'
-import  SoundPlayer  from '../soundplayer'
-const sound = new SoundPlayer();
+import { playPaddleSound, playHitSound } from '../soundplayer'
 export const initCollisions = (game: BreakoutGame) => {
 
   var vsaengine: VSAEngine = game.vsaengine;
@@ -12,11 +11,8 @@ export const initCollisions = (game: BreakoutGame) => {
   Events.on(vsaengine.engine, 'collisionStart', (event: IEventCollision<Engine>) => {
     
     event.pairs.forEach((collision) => {
-      
 
       if (isPairCollide(collision, BreakoutBodyCatagories.Player, BreakoutBodyCatagories.Ball)) {
-        sound.playPaddleSound();
-        
         
         var player: Body = getBody(collision, BreakoutBodyCatagories.Player);
         var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
@@ -48,20 +44,23 @@ export const initCollisions = (game: BreakoutGame) => {
 
         }, 1);
 
+        playPaddleSound();
+
       } else if (isPairCollide(collision, BreakoutBodyCatagories.Ball, BreakoutBodyCatagories.Block)) {
-        sound.playHitSound();
 
         var block: Body = getBody(collision, BreakoutBodyCatagories.Block);
         var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
 
         setTimeout(() => {
           // give player the score
-          game.score += block.label.length;
+          game.modScore(block.label.length);
 
           // kill the blocc
           Composite.remove(vsaengine.engine.world, block);
 
         }, 1); // allow the ball to bounce off
+
+        playHitSound();
 
       }
 

@@ -1,7 +1,6 @@
 import { Engine, Render, World, Bodies, Body } from 'matter-js'
-import { initListeners } from './reciever'
 import BreakoutGame from './game/breakout';
-import { grabStyles } from './styles'
+import { createScoreCounter } from './game/ui'
 
 // initListeners();
 // startBreakout();
@@ -10,6 +9,8 @@ import { grabStyles } from './styles'
 // console.log(styles);
 
 var game: BreakoutGame = new BreakoutGame();
+
+createScoreCounter();
 
 
 

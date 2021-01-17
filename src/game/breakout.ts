@@ -120,8 +120,17 @@ export default class BreakoutGame {
 
   }
 
+  modScore(deltaScore: number) {
+    this.score += deltaScore;
+
+    /* tell ui to update */
+    var scoreBoard = <HTMLDivElement>document.getElementById('score-board');
+    scoreBoard.innerHTML = `score: ${this.score}`;
+
+  }
+
   deductOnDeath() {
-    this.score -= deathPenalty;
+    this.modScore(-deathPenalty);
   }
 
   gameover() {

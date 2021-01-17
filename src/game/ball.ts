@@ -1,7 +1,7 @@
-import VSAEngine from '../engine'
 import BreakoutGame from './breakout'
 import { Bodies, Body, Events, Vector } from 'matter-js'
 import { ball_options } from '../types/BodyTags.types'
+import { playDeathSound } from '../soundplayer'
 
 const minBallSpeed = 5;
 const maxBallSpeed = 12;
@@ -65,6 +65,7 @@ export default class Ball {
         /* deduct score */
         game.deductOnDeath();
 
+        playDeathSound();
       }
       
     });
