@@ -1,20 +1,17 @@
-import { Engine, Events, Body, IEventCollision, IPair, Composite, Vector, Vertices } from 'matter-js'
+import { Engine, Events, Body, IEventCollision, IPair, Composite, Vector, Vertices, World } from 'matter-js'
+import BreakoutGame from './breakout'
 import VSAEngine from '../engine'
-import { ball_options, BreakoutBodyCatagories } from '../types/BodyTags.types'
+import { ball_options, block_options, BreakoutBodyCatagories } from '../types/BodyTags.types'
 import { randomizeVelo } from '../helpers'
 
-export const initCollisions = (vsaengine: VSAEngine) => {
+export const initCollisions = (game: BreakoutGame) => {
+
+  var vsaengine: VSAEngine = game.vsaengine;
 
   Events.on(vsaengine.engine, 'collisionStart', (event: IEventCollision<Engine>) => {
     
     event.pairs.forEach((collision) => {
 
-      // if (collision.bodyA.collisionFilter.category == BreakoutBodyCatagories.Ball || collision.bodyB.collisionFilter.category == BreakoutBodyCatagories.Ball) {
-      //   var ball = getBody(collision, BreakoutBodyCatagories.Ball);
-
-      //   randomizeVelo(ball);
-      // }
-      
       if (isPairCollide(collision, BreakoutBodyCatagories.Player, BreakoutBodyCatagories.Ball)) {
         
         var player: Body = getBody(collision, BreakoutBodyCatagories.Player);
@@ -53,7 +50,12 @@ export const initCollisions = (vsaengine: VSAEngine) => {
         var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
 
         setTimeout(() => {
+          // give player the score
+          game.score += block.label.length;
+
+          // kill the blocc
           Composite.remove(vsaengine.engine.world, block);
+
         }, 1); // allow the ball to bounce off
 
       }

@@ -10,7 +10,6 @@ import { grabStyles } from './styles'
 // console.log(styles);
 
 var game: BreakoutGame = new BreakoutGame();
-game.startBreakout();
 
 
 

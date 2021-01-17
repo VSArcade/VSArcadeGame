@@ -1,4 +1,5 @@
 import VSAEngine from '../engine'
+import BreakoutGame from './breakout'
 import { Bodies, Body, Events, Vector } from 'matter-js'
 import { ball_options } from '../types/BodyTags.types'
 
@@ -9,14 +10,14 @@ export default class Ball {
 
   body: Body
 
-  constructor(vsaengine: VSAEngine, radius: number) {
+  constructor(game: BreakoutGame, radius: number) {
     this.body = Bodies.circle(0, 0, radius, ball_options);
 
     this.resetPos();
 
-    this.onUpdate(vsaengine);
+    this.onUpdate(game);
 
-    vsaengine.addBody([this.body]);
+    game.vsaengine.addBody([this.body]);
   }
 
   resetPos() {
@@ -38,8 +39,8 @@ export default class Ball {
 
   }
 
-  onUpdate(vsaengine: VSAEngine) {
-    Events.on(vsaengine.engine, 'beforeUpdate', () => {
+  onUpdate(game: BreakoutGame) {
+    Events.on(game.vsaengine.engine, 'beforeUpdate', () => {
 
       /* clamp speed */
       var cur_speed = Vector.magnitude(this.body.velocity);
@@ -58,9 +59,12 @@ export default class Ball {
       }
 
       /* check for death */
-      // console.log(`${this.body.position.y}, ${window.innerHeight}`)
       if (this.body.position.y > window.innerHeight+40) {
         this.resetPos();
+
+        /* deduct score */
+        game.deductOnDeath();
+
       }
       
     });

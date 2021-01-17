@@ -1,5 +1,5 @@
 import VSAEngine from '../engine'
-import { Bodies, Body, Events, Vector } from 'matter-js'
+import { Bodies, Body, Composite, Events, Vector, World } from 'matter-js'
 import { initCollisions } from './collisions'
 import Player from './player'
 import Ball from './ball'
@@ -28,8 +28,15 @@ const initBreakoutMap = (vsaengine: VSAEngine) => {
 }
 
 const lineHeight = 25;
-const initWords = (vsaengine: VSAEngine, text: string[], initX: number) => {
+// const fallSpeed = 0.2;
+const fallSpeed = 1;
+const initWords = (game: BreakoutGame, text: string[], initX: number): number => {
+
+    var vsaengine: VSAEngine = game.vsaengine;
+
     var initY = -text.length*lineHeight*9/10
+
+    var totalLen = 0; // this is used to calculate max score
 
     for (var i = 0; i < text.length; i++) {
 
@@ -38,40 +45,65 @@ const initWords = (vsaengine: VSAEngine, text: string[], initX: number) => {
 
         for (var j = 0; j < line.length; j++) {
             var word = line[j];
-            var wordLength = 9*word.length+15
+            var wordLength = 9*word.length+15;
+            totalLen += word.length;
 
             var newWord = Bodies.rectangle(curX, initY, wordLength, 20, block_options);
             newWord.label = word;
             vsaengine.addBody([newWord]);
             if(j!=line.length-1){
-              curX += wordLength/2+line[j+1].length*9/2
-
+              curX += wordLength/2+line[j+1].length*9/2;
             }
-            Body.setVelocity(newWord,{x:0,y:0.2})
-            
-            
+            Body.setVelocity(newWord,{x:0,y:fallSpeed});
+
         }
         initY += lineHeight;
-
     }
+
+    /* check for words to be deleted */
+    Events.on(vsaengine.engine, 'beforeUpdate', () => {
+
+      const bodies: Body[] = Composite.allBodies(vsaengine.engine.world);
+      var word_count = 0;
+
+      bodies.forEach((body: Body) => {
+        
+        if (body.label == undefined) return; // don't care about non-words 
+
+        if (body.position.y > window.innerHeight+40) {
+          Composite.remove(vsaengine.engine.world, body);
+          // console.log(`There are ${bodies.length} bodies`);
+        } else {
+          word_count += 1;
+        }
+
+      });
+
+      if (word_count == 0) { // gameover when there are no more words
+        game.gameover();
+      }
+
+
+    });
+
+    return totalLen;
 }
 
-
+const deathPenalty = 50;
 export default class BreakoutGame {
 
+  vsaengine: VSAEngine;
   score: number
+  possibleScore: number
 
   constructor() {
     this.score = 0;
-  }
 
-  startBreakout() {
-
-    var vsaengine = new VSAEngine();
-    initBreakoutMap(vsaengine);
-    initCollisions(vsaengine);
-    initWords(
-      vsaengine, 
+    this.vsaengine = new VSAEngine();
+    initBreakoutMap(this.vsaengine);
+    initCollisions(this);
+    this.possibleScore = initWords(
+      this.vsaengine, 
       ["setTimeout(() => {",
         "var new_velo: Vector;",
         "if (ball.position.x - player.position.x > 0) { // to right",
@@ -83,11 +115,18 @@ export default class BreakoutGame {
         400
     );
 
-    var player: Player = new Player(vsaengine);
-    var ball: Ball = new Ball(vsaengine, 12);
+    var player: Player = new Player(this.vsaengine);
+    // var ball: Ball = new Ball(this, 12);
 
   }
 
+  deductOnDeath() {
+    this.score -= deathPenalty;
+  }
+
+  gameover() {
+
+  }
 
 }
 
