@@ -14,9 +14,9 @@ export const initListeners = () => {
         const info: InitEventInfo = data.eventInfo;
 
         console.log('READY TO START!!');
-        info.code.forEach(line => {
-          console.log(line);
-        });
+        // info.code.forEach(line => {
+        //   console.log(line);
+        // });
 
         break;
 

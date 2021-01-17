@@ -20,27 +20,30 @@ export const initCollisions = (vsaengine: VSAEngine) => {
         var player: Body = getBody(collision, BreakoutBodyCatagories.Player);
         var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
 
-        // give the ball some extra velo
-
-        // shift the ball's angle depending on position relative to center
-
         setTimeout(() => {
+          // shift the ball's angle depending on position relative to center
+          const minAngle = Math.PI/6;
+
           var new_velo: Vector;
           if (ball.position.x-player.position.x > 0) { // to right
-            new_velo = Vector.rotate({ x: 1, y: 0}, Math.random()*(Math.PI/2));
+            new_velo = Vector.rotate({ x: 1, y: 0}, minAngle+Math.random()*(Math.PI/2-minAngle));
 
-            Body.setVelocity(ball, 
+            Body.setVelocity(
+              ball, 
               Vector.mult(new_velo, Vector.magnitude(ball.velocity))
             );
 
-            
           } else { // to the left
-            new_velo = Vector.rotate({ x: 1, y: 0}, Math.PI/2+Math.random()*(Math.PI/2));
+            new_velo = Vector.rotate({ x: 1, y: 0}, Math.PI/2+Math.random()*(Math.PI/2-minAngle));
 
             Body.setVelocity(ball, 
               Vector.mult(new_velo, Vector.magnitude(ball.velocity))
             );
+
           }
+
+          // give it a little speed boot
+          randomizeVelo(ball, 1, 1.2);
 
         }, 1);
 

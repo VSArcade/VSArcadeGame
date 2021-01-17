@@ -3,8 +3,8 @@ import VSAEngine from '../engine'
 import { player_options } from '../types/BodyTags.types'
 import { clamp } from '../helpers'
 
-const player_speed: number = 0.1;
-const max_speed: number = 1.5;
+const player_speed: number = 0.2;
+const max_speed: number = 2;
 const player_dimension: Vector = {
   x: 200,
   y: 20

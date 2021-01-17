@@ -1,4 +1,5 @@
 import { Engine, Render, World, Bodies, Body, Composite } from 'matter-js'
+import { grabStyles, VSStyle } from './styles'
 
 export default class VSAEngine {
 
@@ -9,50 +10,49 @@ export default class VSAEngine {
     this.engine = Engine.create();
     this.engine.world.gravity.y = 0;
     
-    /* create obj in dom */
-    // var canvas = document.createElement('canvas');
-    // canvas.id = 'game-canvas';
-
     var e = this.engine;
+    var styles: VSStyle = grabStyles();
+    console.log(styles);
+
     function renderCanvas(){
       const bodies = Composite.allBodies(e.world)
 
       var canvas = <HTMLCanvasElement> document.getElementById('game-canvas');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      var context = canvas.getContext('2d')
+      var context = canvas.getContext('2d');
 
-      window.requestAnimationFrame(renderCanvas)
-      context!.fillStyle = '#FFFFFF'
-      context!.fillRect(0, 0, canvas.width, canvas.height)
-      context!.globalAlpha = 1
-      context!.beginPath()
+      window.requestAnimationFrame(renderCanvas);
+      context!.fillStyle = styles.backgroundColor;
+      context!.fillRect(0, 0, canvas.width, canvas.height);
+      context!.globalAlpha = 1;
+      context!.beginPath();
       for (var i = 0; i < bodies.length; i += 1) {
         var body = bodies[i]
         if (body.label!=null) {
 
           // 30px is default font size
-          var fontsize = 15
+          var fontsize = styles.fontSize;
           // arial is default font family
-          var fontfamily = 'Courier New'
+          var fontfamily = styles.fontFamily;
           // white text color by default
-          var color = '#FF0000'
+          var color = styles.foregroundColor;
 
           var content = body.label //this is the string
           
-          context!.fillStyle = 'black'
-          context!.save()
-          context!.translate(body.position.x, body.position.y)
-          const x = body.vertices[1].x - body.vertices[0].x
-          const y = body.vertices[1].y - body.vertices[0].y
-          const radian = Math.atan2(y, x)
-          context!.rotate(radian)
-          context!.textBaseline = 'middle'
-          context!.textAlign = 'center'
-          context!.fillStyle = color
-          context!.font = fontsize + 'px ' + fontfamily
-          context!.fillText(content, 0, 0)
-          context!.restore()
+          context!.fillStyle = styles.foregroundColor;
+          context!.save();
+          context!.translate(body.position.x, body.position.y);
+          const x = body.vertices[1].x - body.vertices[0].x;
+          const y = body.vertices[1].y - body.vertices[0].y;
+          const radian = Math.atan2(y, x);
+          context!.rotate(radian);
+          context!.textBaseline = 'middle';
+          context!.textAlign = 'center';
+          context!.fillStyle = color;
+          context!.font = fontsize + 'px ' + fontfamily;
+          context!.fillText(content, 0, 0);
+          context!.restore();
 
         } else {
           var vertices = body.vertices
@@ -65,7 +65,7 @@ export default class VSAEngine {
         }
     }
     context!.lineWidth = 1.5
-    context!.strokeStyle = '#000000'
+    context!.strokeStyle = styles.foregroundColor;
     context!.stroke()
 
     }
