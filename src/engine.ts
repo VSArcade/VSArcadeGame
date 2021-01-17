@@ -63,7 +63,6 @@ export default class VSAEngine {
           context!.lineTo(vertices[0].x, vertices[0].y)
 
         }
-    
     }
     context!.lineWidth = 1.5
     context!.strokeStyle = '#000000'

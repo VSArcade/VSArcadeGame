@@ -34,18 +34,22 @@ const initWords = (vsaengine: VSAEngine, text: string[], initY: number, initX: n
     for (var i = 0; i < text.length; i++) {
 
         var line = text[i].split(' ');
-        var curX = 400;
+        var curX = 500;
 
         for (var j = 0; j < line.length; j++) {
             var word = line[j];
+            var wordLength = 9*word.length
 
-            var newWord = Bodies.rectangle(curX, curY, 10*word.length, 20, block_options);
+            var newWord = Bodies.rectangle(curX, curY, wordLength, 20, block_options);
             newWord.label = word;
             vsaengine.addBody([newWord]);
+            if(j!=line.length-1){
+              curX += wordLength/2+line[j+1].length*9/2
 
-            curX += 10*word.length 
+            }
+            
         }
-        curY += 15
+        curY += 100
     }
 }
 
@@ -70,15 +74,19 @@ export const startBreakout = () => {
 
   var vsaengine = new VSAEngine();
   initBreakoutMap(vsaengine);
-  initBall(vsaengine);
+  //initBall(vsaengine);
   initCollisions(vsaengine);
   initWords(
     vsaengine, 
-    ["hello, Many of you are probably feeling a little sad.",
-     "This is ok. Sadness is a normal human emotion.",
-     "I encourage you to watch the movie Inside Out - one of the best movies of all time.",
-     "Try not to take your performance in this course as a barometer by which you should measure yourself. This is true for any course at any time but is especially true for this particular term where both the school and the students are learning to adjust to this new format. There is also the written part to to this midterm which will likely boost everyone's average (if previous Crowdmark assessments are to be believed). As it stands at the moment, the grades so far are not out of line with previous years. Specific to this course is the fact that the second half is generally easier to understand than the first half so hopefully this will give everyone a moral if not quantitative boost. At the end of it all try hard to look at your effort and be proud of the work you put in. University in general requires a big adjustment and unfortunately for everyone starting new this year will likely require a few more adjustments over the coming years. One of the biggest, most important and rarely talked about benefits of university as a whole is just a general growth of the individual regardless of what discipline they ultimately decided to study. A reflection for you. - Math 137"], 
-    200, 200
+    ["setTimeout(() => {",
+      "var new_velo: Vector;",
+      "if (ball.position.x - player.position.x > 0) { // to right",
+        "new_velo = Vector.rotate({ x: 1, y: 0}, Math.random() * (Math.PI/2) );",
+
+        "Body.setVelocity(ball, ",
+          "Vector.mult( new_velo, Vector.magnitude(ball.velocity) )",
+        ");"], 
+    0, 200
   );
   var player: Player = new Player(vsaengine);
 
