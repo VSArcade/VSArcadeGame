@@ -3,6 +3,7 @@ import { Bodies, Body, Composite, Events, Vector, World } from 'matter-js'
 import { initCollisions } from './collisions'
 import Player from './player'
 import Ball from './ball'
+import { createScoreCounter } from './ui'
 import { 
   boundary_options, 
   boundary_bottom_options, 
@@ -10,8 +11,6 @@ import {
   block_options 
 } from '../types/BodyTags.types'
 
-					// // check for lines with only whitespace and ignore them
-					// if (document.lineAt(i).text.replace(/\s/g, '').length == 0) continue;
 
 const border_thickness = 20;
 
@@ -45,6 +44,10 @@ const initWords = (game: BreakoutGame, text: string[], initX: number): number =>
 
         for (var j = 0; j < line.length; j++) {
             var word = line[j];
+
+            // check for lines with only whitespace and ignore them
+            if (word.replace(/\s/g, '').length == 0) continue;
+
             var wordLength = 9*word.length+15;
             totalLen += word.length;
 
@@ -98,26 +101,21 @@ export default class BreakoutGame {
 
   constructor() {
     this.score = 0;
+    this.possibleScore = 0;
 
     this.vsaengine = new VSAEngine();
     initBreakoutMap(this.vsaengine);
     initCollisions(this);
-    this.possibleScore = initWords(
-      this, 
-      ["setTimeout(() => {",
-        "var new_velo: Vector;",
-        "if (ball.position.x - player.position.x > 0) { // to right",
-          "new_velo = Vector.rotate({ x: 1, y: 0}, Math.random() * (Math.PI/2) );",
-          "",
-          "Body.setVelocity(ball, ",
-            "Vector.mult( new_velo, Vector.magnitude(ball.velocity) )",
-          ");"], 
-        400
-    );
 
     var player: Player = new Player(this.vsaengine);
     var ball: Ball = new Ball(this, 12);
 
+    createScoreCounter();
+
+  }
+
+  setWords(words: string[]) {
+    this.possibleScore = initWords(this, words, 400);
   }
 
   modScore(deltaScore: number) {

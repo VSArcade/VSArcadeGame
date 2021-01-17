@@ -1,5 +1,5 @@
+import BreakoutGame from './game/breakout';
 import { EventType, EventInfo, EventData, InitEventInfo } from './types/EventData.types'
-// import { startBreakout } from './game/breakout';
 
 export const initListeners = () => {
 
@@ -13,10 +13,9 @@ export const initListeners = () => {
 
         const info: InitEventInfo = data.eventInfo;
 
-        console.log('READY TO START!!');
-        // info.code.forEach(line => {
-        //   console.log(line);
-        // });
+        console.log('Welcome to VSArcade!!');
+        var game: BreakoutGame = new BreakoutGame();
+        game.setWords(info.code);
 
         break;
 

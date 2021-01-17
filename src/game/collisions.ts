@@ -3,7 +3,7 @@ import BreakoutGame from './breakout'
 import VSAEngine from '../engine'
 import { ball_options, block_options, BreakoutBodyCatagories } from '../types/BodyTags.types'
 import { randomizeVelo } from '../helpers'
-import { playPaddleSound, playHitSound } from '../soundplayer'
+import { playPaddleSound, playHitSound, playWallSound } from '../soundplayer'
 export const initCollisions = (game: BreakoutGame) => {
 
   var vsaengine: VSAEngine = game.vsaengine;
@@ -61,6 +61,20 @@ export const initCollisions = (game: BreakoutGame) => {
         }, 1); // allow the ball to bounce off
 
         playHitSound();
+
+      } else if (isPairCollide(collision, BreakoutBodyCatagories.BoundryTop, BreakoutBodyCatagories.Ball)) {
+        var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
+        setTimeout(() => {
+          if (Math.abs(ball.velocity.y) < 0.1) {
+            Body.setVelocity(ball, {x:ball.velocity.x ,y: Math.sign(ball.velocity.y)*0.1})
+          }
+        }, 1);
+
+        playWallSound();
+
+      } else if (isPairCollide(collision, BreakoutBodyCatagories.Boundary, BreakoutBodyCatagories.Ball)) {
+
+        playWallSound();
 
       }
 
