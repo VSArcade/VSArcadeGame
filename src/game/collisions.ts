@@ -63,6 +63,17 @@ export const initCollisions = (game: BreakoutGame) => {
 
         }, 1); // allow the ball to bounce off
 
+      }else if (isPairCollide(collision,BreakoutBodyCatagories.BoundryTop,BreakoutBodyCatagories.Ball)){
+        var ball: Body = getBody(collision, BreakoutBodyCatagories.Ball);
+        setTimeout(() => {
+          if(Math.abs(ball.velocity.y)<0.1){
+            Body.setVelocity(ball,{x:ball.velocity.x,y:Math.sign(ball.velocity.y)*0.1})
+          }
+          
+          
+
+        }, 1);
+
       }
 
     });
