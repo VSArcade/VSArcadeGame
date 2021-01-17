@@ -1,8 +1,14 @@
 import VSAEngine from '../engine'
-import { Engine, Render, World, Bodies, Body } from 'matter-js'
+import { Bodies, Body, Events } from 'matter-js'
 import { initCollisions } from './collisions'
 import Player from './player'
-import { boundary_options, ball_options, block_options } from '../types/BodyTags.types'
+import { 
+  boundary_options, 
+  boundary_bottom_options, 
+  boundary_top_options, 
+  ball_options, 
+  block_options 
+} from '../types/BodyTags.types'
 
 
 					// // check for lines with only whitespace and ignore them
@@ -16,8 +22,8 @@ const initBreakoutMap = (vsaengine: VSAEngine) => {
   vsaengine.addBody([
     Bodies.rectangle(0-border_thickness, 0, border_thickness, window.innerHeight*2, boundary_options),
     Bodies.rectangle(window.innerWidth, 0, border_thickness, window.innerHeight*2, boundary_options),
-    Bodies.rectangle(0, 0-border_thickness, window.innerWidth*2, border_thickness, boundary_options),
-    Bodies.rectangle(0, window.innerHeight, window.innerWidth*2, border_thickness, boundary_options),
+    Bodies.rectangle(0, 0-border_thickness, window.innerWidth*2, border_thickness, boundary_top_options),
+    Bodies.rectangle(0, window.innerHeight, window.innerWidth*2, border_thickness, boundary_bottom_options),
   ]);  
 
 }
@@ -43,6 +49,7 @@ const initWords = (vsaengine: VSAEngine, text: string[], initY: number, initX: n
     }
 }
 
+const maxBallSpeed = 10;
 const initBall = (vsaengine: VSAEngine) => {
   var ball = Bodies.circle(200, 200, 12, ball_options);
 
@@ -50,6 +57,11 @@ const initBall = (vsaengine: VSAEngine) => {
     x: (-0.5+Math.random())*20, 
     y: (-0.5+Math.random())*20 
   });
+
+  // var cur_speed = ;
+  // Events.on(vsaengine.engine, 'beforeUpdate', () => {
+    
+  // });
 
   vsaengine.addBody([ball]);
 }
